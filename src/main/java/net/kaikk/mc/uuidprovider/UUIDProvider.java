@@ -54,6 +54,10 @@ public class UUIDProvider extends JavaPlugin {
 			return null;
 		}
 		
+		if (!name.matches("[a-zA-Z0-9_]+")) {
+			return null;
+		}
+		
 		if (Mode.check(Mode.INTERNAL, mode)) {
 			// Internal cache
 			PlayerData playerData = getFromInternalCache(name);
@@ -111,11 +115,13 @@ public class UUIDProvider extends JavaPlugin {
 			
 			List<String> namesToRequest = new ArrayList<String>(names.size());
 			for (String name : names) {
-				UUID uuid = get(name, mode);
-				if (uuid==null) {
-					namesToRequest.add(name);
+				if (name.matches("[a-zA-Z0-9_]+")) {
+					UUID uuid = get(name, mode);
+					if (uuid==null) {
+						namesToRequest.add(name);
+					}
+					map.put(name, uuid);
 				}
-				map.put(name, uuid);
 			}
 			
 			if (!namesToRequest.isEmpty()) {
