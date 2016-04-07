@@ -57,8 +57,8 @@ class DataStore {
 			
 			Statement statement = this.db.createStatement();
 			
-			// delete cache data older than 37 days
-			statement.executeUpdate("DELETE FROM uuidcache WHERE lastcheck < "+(Utils.epoch()-3196800));
+			// delete cache data older than 90 days
+			statement.executeUpdate("DELETE FROM uuidcache WHERE lastcheck < "+(Utils.epoch()-7776000));
 			
 			// load cache data from database
 			ResultSet results = statement.executeQuery("SELECT * FROM uuidcache");
