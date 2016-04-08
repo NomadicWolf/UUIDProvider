@@ -58,7 +58,7 @@ class DataStore {
 			Statement statement = this.db.createStatement();
 			
 			// delete cache data older than 90 days
-			statement.executeUpdate("DELETE FROM uuidcache WHERE lastcheck < "+(Utils.epoch()-7776000));
+			statement.executeUpdate("DELETE FROM uuidcache "+(instance.config.offlineMode ? "" : "WHERE lastcheck < "+(Utils.epoch()-7776000)));
 			
 			// load cache data from database
 			ResultSet results = statement.executeQuery("SELECT * FROM uuidcache");
@@ -113,7 +113,7 @@ class DataStore {
 			this.dbCheck();
 			
 			Statement statement = this.db.createStatement();
-			ResultSet results = statement.executeQuery("SELECT * FROM uuidcache WHERE name=\""+name+"\" AND lastcheck>"+(Utils.epoch()-3196800)+" LIMIT 1");
+			ResultSet results = statement.executeQuery("SELECT * FROM uuidcache WHERE name=\""+name+"\""+(instance.config.offlineMode ? "" : " AND lastcheck>"+(Utils.epoch()-3196800))+" LIMIT 1");
 			
 			if(results.next()) {
 				PlayerData playerData = new PlayerData(Utils.toUUID(results.getBytes(1)), results.getString(2), results.getInt(3));
@@ -134,7 +134,7 @@ class DataStore {
 			this.dbCheck();
 			
 			Statement statement = this.db.createStatement();
-			ResultSet results = statement.executeQuery("SELECT * FROM uuidcache WHERE uuid="+Utils.UUIDtoHexString(uuid)+" AND lastcheck>"+(Utils.epoch()-3196800));
+			ResultSet results = statement.executeQuery("SELECT * FROM uuidcache WHERE uuid="+Utils.UUIDtoHexString(uuid)+(instance.config.offlineMode ? "" : " AND lastcheck>"+(Utils.epoch()-3196800)));
 			
 			if(results.next()) {
 				PlayerData playerData = new PlayerData(Utils.toUUID(results.getBytes(1)), results.getString(2), results.getInt(3));
