@@ -2,6 +2,7 @@ name: ${project.artifactId}
 main: ${package}.bukkit.${project.artifactId}Bukkit
 version: ${project.version}
 author: ${developer}
+depend: [KaisCommons]
 
 commands:
    uuidprovider:
