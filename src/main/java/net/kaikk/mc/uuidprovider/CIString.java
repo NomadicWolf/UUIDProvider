@@ -20,16 +20,14 @@ public class CIString {
 
 	@Override
 	public boolean equals(Object obj) {
-		String otherMessage = null;
 		if (obj instanceof CIString) {
-			otherMessage = obj.toString();
+			return this.lcString.equals(((CIString) obj).lcString);
+		} else if (obj instanceof String) {
+			return this.lcString.equalsIgnoreCase((String)obj);
+		} else if (obj == null) {
+			return false;
+		} else {
+			return this.lcString.equalsIgnoreCase(obj.toString());
 		}
-		if (obj instanceof String) {
-			otherMessage = (String) obj;
-		}
-		
-		return this.lcString.equalsIgnoreCase(otherMessage);
 	}
-	
-	
 }

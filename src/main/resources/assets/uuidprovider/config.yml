@@ -3,10 +3,15 @@
 # Useful for servers not connected to the internet.
 OfflineMode: false
 
+
+# Dummy mode (Bukkit only)
+# Enabling this will just bypass all UUIDProvider's code and provide Bukkit's UUIDs/Names.
+# This may be useful if there is another plugin that manages UUIDs
+DummyMode: false
+
 # Configuration for MySQL
 MySQL:
   Hostname: localhost
   Username: ${project.artifactId}
   Password: ${project.artifactId}Password
   Database: ${project.artifactId}
-  
