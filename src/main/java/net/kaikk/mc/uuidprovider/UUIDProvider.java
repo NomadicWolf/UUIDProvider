@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -50,16 +51,26 @@ public class UUIDProvider {
 		instance = new UUIDProvider(config);
 	}
 
-	/** Get the UUID of the specified name, using all available modes <br>
-	 * Thread-safe */
+	/**
+	 * Get the UUID of the specified name, using all available modes <br>
+	 * Thread-safe
+	 * @param name the player's name
+	 * @return the player's uuid, null if not found
+	 */
 	public static UUID get(String name) {
 		return get(name, Mode.ALL);
 	}
 
-	/** Get the UUID of the specified name, using the specified mode<br>
+
+	/**
+	 * Get the UUID of the specified name, using the specified mode<br>
 	 * One ore more modes can be specified, delimited by the | operator.<br>
 	 * Example: UUID uuid = get(name, Mode.INTERNAL | Mode.DATABASE); <br>
-	 * Thread-safe */
+	 * Thread-safe
+	 * @param name the player name
+	 * @param mode the selected modes to get the uuid
+	 * @return the player's uuid, null if not found
+	 */
 	public static UUID get(String name, int mode) {
 		if (name.length()>16) {
 			return null;
@@ -112,19 +123,30 @@ public class UUIDProvider {
 		return uuid;
 	}
 
-	/** Get a map of uuids from the specified names list, using all available modes<br>
+
+	/**
+	 * Get a map of uuids from the specified names list, using all available modes<br>
 	 * This is the best method if you have to get a lot of uuids at the same time<br>
-	 * Thread-safe */
-	public static Map<String,UUID> getUUIDs(List<String> names) {
+	 * Thread-safe
+	 * @param names a collection of players' name
+	 * @return a map of player's name - uuid. if the uuid of a player cannot be found, it won't be included into the returned map.
+	 */
+	public static Map<String,UUID> getUUIDs(Collection<String> names) {
 		return getUUIDs(names, Mode.ALL);
 	}
 
-	/** Get a map of uuids from the specified names list, using the specified mode<br>
+
+	/**
+	 * Get a map of uuids from the specified names list, using the specified mode<br>
 	 * This is the best method if you have to get a lot of uuids at the same time<br>
 	 * One ore more modes can be specified, delimited by the | operator.<br>
 	 * Example: UUID uuid = get(names, Mode.INTERNAL | Mode.DATABASE); <br>
-	 * Thread-safe */
-	public static Map<String,UUID> getUUIDs(List<String> names, int mode) {
+	 * Thread-safe
+	 * @param names a collection of players' name
+	 * @param mode the selected modes to get the uuid
+	 * @return a map of player's name - uuid. if the uuid of a player cannot be found, it won't be included into the returned map.
+	 */
+	public static Map<String,UUID> getUUIDs(Collection<String> names, int mode) {
 		Map<String,UUID> map = new HashMap<String,UUID>(names.size());
 
 		if (Mode.check(Mode.MOJANG, mode)) {
@@ -212,11 +234,11 @@ public class UUIDProvider {
 		return name;
 	}
 
-	public static Map<UUID,String> getNames(List<UUID> uuids) {
+	public static Map<UUID,String> getNames(Collection<UUID> uuids) {
 		return getNames(uuids, Mode.ALL);
 	}
 
-	public static Map<UUID,String> getNames(List<UUID> uuids, int mode) { // TODO
+	public static Map<UUID,String> getNames(Collection<UUID> uuids, int mode) {
 		final Map<UUID,String> map = new HashMap<UUID,String>(uuids.size());
 
 		if (Mode.check(Mode.MOJANG, mode)) {
@@ -384,12 +406,14 @@ public class UUIDProvider {
 		return null;
 	}
 
-	/** Modes used in get methods (see get method for more informations how to use this class)<br>
+
+	/**
+	 * Modes used in get methods (see get method for more informations how to use this class)<br>
 	 *  INTERNAL: Check on the internal map only <br>
 	 *  DATABASE: Check the MySQL database<br>
 	 *  MOJANG: Send a request to the Mojang (very slow!) <br>
 	 *  ALL: All the above, in that order.
-	 * */
+	 */
 	public static class Mode {
 		public final static int INTERNAL = 1;
 		public final static int DATABASE = 2;

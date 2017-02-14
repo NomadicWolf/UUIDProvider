@@ -20,7 +20,7 @@ import net.kaikk.mc.uuidprovider.UUIDProvider.Mode;
 
 public class UUIDProviderCache implements GameProfileCache {
 	private Map<UUID,GameProfile> cache = new ConcurrentHashMap<UUID,GameProfile>();
-	
+
 	@Override
 	public boolean add(GameProfile profile, boolean overwrite, Date expiry) {
 		if (!overwrite && UUIDProvider.get(profile.getUniqueId(), Mode.INTERNAL | Mode.DATABASE) != null) {
@@ -74,7 +74,7 @@ public class UUIDProviderCache implements GameProfileCache {
 		for (UUID uuid : uniqueIds) {
 			map.put(uuid, this.getById(uuid));
 		}
-		
+
 		return map;
 	}
 
@@ -89,7 +89,7 @@ public class UUIDProviderCache implements GameProfileCache {
 		for (UUID uuid : uniqueIds) {
 			map.put(uuid, this.lookupById(uuid));
 		}
-		
+
 		return map;
 	}
 
@@ -104,7 +104,7 @@ public class UUIDProviderCache implements GameProfileCache {
 		for (UUID uuid : uniqueIds) {
 			map.put(uuid, this.getOrLookupById(uuid));
 		}
-		
+
 		return map;
 	}
 
@@ -119,7 +119,7 @@ public class UUIDProviderCache implements GameProfileCache {
 		for (String name : names) {
 			map.put(name, this.getByName(name));
 		}
-		
+
 		return map;
 	}
 
@@ -134,7 +134,7 @@ public class UUIDProviderCache implements GameProfileCache {
 		for (String name : names) {
 			map.put(name, this.lookupByName(name));
 		}
-		
+
 		return map;
 	}
 
@@ -149,7 +149,7 @@ public class UUIDProviderCache implements GameProfileCache {
 		for (String name : names) {
 			map.put(name, this.getOrLookupByName(name));
 		}
-		
+
 		return map;
 	}
 
@@ -167,7 +167,7 @@ public class UUIDProviderCache implements GameProfileCache {
 	public Collection<GameProfile> match(String name) {
 		Collection<GameProfile> list = new ArrayList<GameProfile>();
 		for (PlayerData pd : UUIDProvider.getInstance().getCachedPlayersData().values()) {
-			if (pd.getName().startsWith(name)) {
+			if (pd.getName() != null && pd.getName().startsWith(name)) {
 				list.add(this.getById(pd.getUUID()).get());
 			}
 		}
@@ -179,17 +179,17 @@ public class UUIDProviderCache implements GameProfileCache {
 		if (profile != null) {
 			return Optional.of(profile);
 		}
-		
+
 		final String name = UUIDProvider.get(uniqueId);
 		if (name == null) {
 			return Optional.empty();
 		}
-		
+
 		profile = GameProfile.of(uniqueId, name);
 		this.cache.put(uniqueId, profile);
 		return Optional.of(profile);
 	}
-	
+
 	public Optional<GameProfile> get(String name, int mode) {
 		final UUID uuid = UUIDProvider.get(name);
 		if (uuid == null) {
