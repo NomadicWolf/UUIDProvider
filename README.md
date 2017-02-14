@@ -11,7 +11,22 @@ If you're running multiple servers, be sure to use the same MySQL database to im
 
 ##Developers: how to use it
 
-Add this plugin in your project's build path.
+Add this plugin in your project's build path. Maven:
+```xml
+<repository>
+  <id>net.kaikk.mc</id>
+  <url>http://kaikk.net/mc/repo/</url>
+</repository>
+```
+```xml
+<dependency>
+  <groupId>net.kaikk.mc</groupId>
+  <artifactId>UUIDProvider</artifactId>
+  <version>2.5</version>
+  <type>jar</type>
+  <scope>provided</scope>
+</dependency>
+```
 
 Most important methods:
 - (UUID) UUIDProvider.get(OfflinePlayer)
