@@ -7,6 +7,7 @@ All my plugin's builds can be downloaded from http://kaikk.net/mc/#bukkit
 ##Install
 A MySQL database is required. Also [Kai's Commons](https://github.com/KaiKikuchi/KaisCommons/releases) is required.
 Edit plugins/UUIDProvider/config.yml and set your database account.
+Sponge version also requires [JSON-simple](https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple/1.1.1)
 If you're running multiple servers, be sure to use the same MySQL database to improve performances!
 
 ##Developers: how to use it
