@@ -9,7 +9,7 @@ import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Order;
 import org.spongepowered.api.event.game.GameReloadEvent;
-import org.spongepowered.api.event.game.state.GameInitializationEvent;
+import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.plugin.Dependency;
@@ -37,7 +37,7 @@ public class UUIDProviderSponge {
 	private UUIDProviderCache cache;
 
 	@Listener
-	public void onGameInit(GameInitializationEvent event) throws Exception {
+	public void onGamePreInit(GamePreInitializationEvent event) throws Exception {
 		this.load();
 		this.cache = new UUIDProviderCache();
 		Sponge.getServer().getGameProfileManager().setCache(cache);
